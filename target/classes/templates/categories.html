@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Categories</title>
+</head>
+<body>
+<nav>
+    <a th:href="@{/products}">Products</a> |
+    <a th:href="@{/categories}">Categories</a> |
+    <a th:href="@{/brands}">Brands</a>
+</nav>
+
+<h1>Categories</h1>
+<a th:href="@{/categories/new}">Add Category</a>
+
+<table border="1">
+    <thead>
+    <tr><th>Name</th><th>Slug</th><th>Parent</th><th>Order</th><th>Active</th></tr>
+    </thead>
+    <tbody>
+    <tr th:each="c : ${categories}">
+        <td th:text="${#strings.isEmpty(c.parentSlug) ? c.name : '— ' + c.name}"></td>
+        <td th:text="${c.slug}"></td>
+        <td th:text="${#strings.isEmpty(c.parentSlug) ? '—' : parentNames[c.parentSlug]}"></td>
+        <td th:text="${c.displayOrder}"></td>
+        <td th:text="${c.active} ? 'Yes' : 'No'"></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

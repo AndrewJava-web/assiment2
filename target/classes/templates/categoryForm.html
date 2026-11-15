@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>New Category</title>
+</head>
+<body>
+<nav>
+    <a th:href="@{/products}">Products</a> |
+    <a th:href="@{/categories}">Categories</a> |
+    <a th:href="@{/brands}">Brands</a>
+</nav>
+
+<h1>New Category</h1>
+
+<form th:action="@{/categories}" th:object="${category}" method="post">
+    <div>
+        <label>Name</label>
+        <input type="text" th:field="*{name}">
+        <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}" style="color:red"></span>
+    </div>
+
+    <div>
+        <label>Slug</label>
+        <input type="text" th:field="*{slug}">
+        <span th:if="${#fields.hasErrors('slug')}" th:errors="*{slug}" style="color:red"></span>
+    </div>
+
+    <div>
+        <label>Parent</label>
+        <select th:field="*{parentSlug}">
+            <option value="">None (top level)</option>
+            <option th:each="p : ${parents}" th:value="${p.slug}" th:text="${p.name}"></option>
+        </select>
+        <span th:if="${#fields.hasErrors('parentSlug')}" th:errors="*{parentSlug}" style="color:red"></span>
+    </div>
+
+    <div>
+        <label>Display Order</label>
+        <input type="number" th:field="*{displayOrder}">
+        <span th:if="${#fields.hasErrors('displayOrder')}" th:errors="*{displayOrder}" style="color:red"></span>
+    </div>
+
+    <div>
+        <label><input type="checkbox" th:field="*{active}"> Active</label>
+    </div>
+
+    <button type="submit">Save</button>
+    <a th:href="@{/categories}">Cancel</a>
+</form>
+</body>
+</html>
